@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .confidence {
+            font-size: 18px;
+            color: #16a085;
+            margin-top: 10px;
+        }
+        .home-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .home-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ECG Prediction Result</h1>
+        <p class="result">Prediction: 
+            <span>
+                {% if result == 'mi' %}
+                    Myocardial Infarction
+                {% elif result == 'hb' %}
+                    Abnormal
+                {% elif result == 'normal' %}
+                    Normal
+                {% else %}
+                    {{ result }}
+                {% endif %}
+            </span>
+        </p>
+        <p class="confidence">Confidence: <span>{{ confidence }}</span></p>
+
+        <a href="/" class="home-btn">Upload Another ECG</a>
+    </div>
+
+</body>
+</html>

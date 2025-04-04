@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ECG Analysis Result</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .result-header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .result { 
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .result.normal {
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid #2ecc71;
+        }
+        .result.abnormal {
+            background: rgba(231, 76, 60, 0.1);
+            border: 2px solid #e74c3c;
+        }
+        .classification {
+            font-size: 2em;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .normal-text { 
+            color: #27ae60;
+        }
+        .abnormal-text { 
+            color: #c0392b;
+        }
+        .confidence { 
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: #34495e;
+        }
+        .message {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f7f9fc;
+            color: #2c3e50;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+        .urgency {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        .action-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-header">
+            <h1>ECG Analysis Results</h1>
+        </div>
+        
+        <div class="result {{ 'normal' if result == 'Normal' else 'abnormal' }}">
+            <h2>Classification:</h2>
+            <div class="classification {{ 'normal-text' if result == 'Normal' else 'abnormal-text' }}">
+                {{ result }}
+            </div>
+            <div class="confidence">
+                Confidence Level: {{ confidence }}%
+            </div>
+            
+            <div class="message">
+                {% if result == 'Normal' %}
+                    <p>Your ECG analysis indicates normal cardiac patterns. However, please note that this is an AI-assisted analysis.</p>
+                    <p>For complete assurance, we recommend:</p>
+                    <ul>
+                        <li>Consulting with your healthcare provider</li>
+                        <li>Regular cardiac check-ups</li>
+                        <li>Maintaining a healthy lifestyle</li>
+                    </ul>
+                {% else %}
+                    <p>The analysis indicates potential cardiac irregularities that require attention.</p>
+                    <div class="urgency">
+                        ⚠️ IMPORTANT: Please seek immediate medical attention!
+                    </div>
+                    <p>This AI-assisted analysis suggests patterns consistent with {{ result }}, which requires professional medical evaluation.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{{ url_for('index') }}" class="action-btn">Analyze Another ECG</a>
+        </div>
+    </div>
+</body>
+</html>
